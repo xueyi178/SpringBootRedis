@@ -9,4 +9,8 @@ package com.jbg.redis.api;
  * @Version 1.0
  */
 public class ApiApplication {
+
+    public static void main(String[] args) {
+        System.out.println("ssssssssssssssssssss");
+    }
 }
