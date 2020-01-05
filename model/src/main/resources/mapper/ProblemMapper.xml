@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jbg.redis.model.mapper.ProblemMapper">
+  <resultMap id="BaseResultMap" type="com.jbg.redis.model.entity.Problem">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="choice_a" jdbcType="VARCHAR" property="choiceA" />
+    <result column="choice_b" jdbcType="VARCHAR" property="choiceB" />
+    <result column="is_active" jdbcType="TINYINT" property="isActive" />
+    <result column="order_by" jdbcType="TINYINT" property="orderBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, choice_a, choice_b, is_active, order_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from problem
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from problem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jbg.redis.model.entity.Problem">
+    insert into problem (id, title, choice_a, 
+      choice_b, is_active, order_by
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{choiceA,jdbcType=VARCHAR}, 
+      #{choiceB,jdbcType=VARCHAR}, #{isActive,jdbcType=TINYINT}, #{orderBy,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jbg.redis.model.entity.Problem">
+    insert into problem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="choiceA != null">
+        choice_a,
+      </if>
+      <if test="choiceB != null">
+        choice_b,
+      </if>
+      <if test="isActive != null">
+        is_active,
+      </if>
+      <if test="orderBy != null">
+        order_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceA != null">
+        #{choiceA,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceB != null">
+        #{choiceB,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
+        #{isActive,jdbcType=TINYINT},
+      </if>
+      <if test="orderBy != null">
+        #{orderBy,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jbg.redis.model.entity.Problem">
+    update problem
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceA != null">
+        choice_a = #{choiceA,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceB != null">
+        choice_b = #{choiceB,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=TINYINT},
+      </if>
+      <if test="orderBy != null">
+        order_by = #{orderBy,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jbg.redis.model.entity.Problem">
+    update problem
+    set title = #{title,jdbcType=VARCHAR},
+      choice_a = #{choiceA,jdbcType=VARCHAR},
+      choice_b = #{choiceB,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=TINYINT},
+      order_by = #{orderBy,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
