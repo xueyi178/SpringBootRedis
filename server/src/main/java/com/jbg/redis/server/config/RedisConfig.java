@@ -17,17 +17,19 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
- * @ProjectName
- * @ClassName RedisConfig
- * @Description TODO
- * @Author Lenovo
- * @Date 2020/1/5 16:10
- * @Version 1.0
+ * <p>
+ *  Redis管理类
+ * </p>
+ * @author Xueyi
+ * @since 2019/9/25
  */
 @Configuration  //用于定义配置类
 @EnableCaching //缓存管理
 public class RedisConfig extends CachingConfigurerSupport {
 
+    /**
+     * 连接工厂
+     */
     @Autowired
     private RedisConnectionFactory connectionFactory;
 
@@ -60,7 +62,10 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
 
-    //缓存cache管理器
+    /**
+     * 缓存cache管理器
+     * @return
+     */
     @Override
     public CacheManager cacheManager() {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()

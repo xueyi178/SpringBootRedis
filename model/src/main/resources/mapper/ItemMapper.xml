@@ -20,7 +20,7 @@
     delete from item
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jbg.redis.model.entity.Item">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jbg.redis.model.entity.Item">
     insert into item (id, code, name, 
       create_time)
     values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
