@@ -11,4 +11,6 @@ package com.jbg.redis.server.constant;
 public class Constant {
 
     public static final String RedisStringPrefix = "SpringBootRedis:String";
+
+    public static final String RedisListPrefix = "SpringBootRedis:List:User:";
 }

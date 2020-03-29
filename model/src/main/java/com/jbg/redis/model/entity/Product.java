@@ -1,53 +1,33 @@
 package com.jbg.redis.model.entity;
 
-public class Product {
+import lombok.Data;
+import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+
+
+/**
+ * <p>
+ *  商户商品的实体类
+ * </p>
+ *
+ * @author Xueyi
+ * @since 2020/3/15 15:16
+ */
+@Data
+@ToString
+public class Product implements Serializable {
     private Integer id;
 
+    @NotNull(message = "商品名称不能为空")
     private String name;
 
+    @NotNull(message = "所属商户id不能为空")
     private Integer userId;
 
     private Integer scanTotal;
 
     private Byte isActive;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getScanTotal() {
-        return scanTotal;
-    }
-
-    public void setScanTotal(Integer scanTotal) {
-        this.scanTotal = scanTotal;
-    }
-
-    public Byte getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Byte isActive) {
-        this.isActive = isActive;
-    }
 }

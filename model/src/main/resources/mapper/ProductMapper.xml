@@ -21,7 +21,7 @@
     delete from product
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.jbg.redis.model.entity.Product">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.jbg.redis.model.entity.Product">
     insert into product (id, name, user_id, 
       scan_total, is_active)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
