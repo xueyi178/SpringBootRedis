@@ -1,13 +1,20 @@
 package com.jbg.redis.server.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jbg.redis.model.entity.Item;
+import com.jbg.redis.model.entity.Notice;
+import com.jbg.redis.model.entity.Product;
 import com.jbg.redis.model.mapper.ItemMapper;
+import com.jbg.redis.model.mapper.NoticeMapper;
+import com.jbg.redis.server.constant.Constant;
 import com.jbg.redis.server.redis.StringRedisService;
 import com.jbg.redis.server.service.IRedisStringService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,4 +94,6 @@ public class RedisStringServiceImpl implements IRedisStringService {
         }
         return item;
     }
+
+
 }

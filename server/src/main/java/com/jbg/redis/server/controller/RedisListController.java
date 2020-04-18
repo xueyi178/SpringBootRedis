@@ -1,13 +1,18 @@
 package com.jbg.redis.server.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.jbg.redis.api.response.BaseResponse;
 import com.jbg.redis.api.response.StatusCode;
+import com.jbg.redis.model.entity.Notice;
 import com.jbg.redis.model.entity.Product;
 import com.jbg.redis.server.service.impl.RedisListServiceImpl;
+import com.jbg.redis.server.utils.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,8 +64,11 @@ public class RedisListController {
 
 
     /**
-     * 2. 获取商户商品列表
-     * @return
+     * 2. 描述: 获取商户商品列表
+     *    作者: xueyi
+     *    日期: 2020/4/18 9:01
+     *    参数: [id]
+     *    返回: com.jbg.redis.api.response.BaseResponse
      */
     @PostMapping(value = "/get")
     public BaseResponse get(@RequestParam Integer id){
@@ -76,5 +84,28 @@ public class RedisListController {
             baseResponse = new BaseResponse(StatusCode.Fail.getCode(), e.getMessage());
         }
         return baseResponse;
+    }
+
+    /**
+     * 3. 描述: 平台发送通知给到各位商户
+     *    作者: xueyi
+     *    日期: 2020/4/12 16:08
+     *    参数: [notice, result]
+     *    返回: com.jbg.redis.api.response.BaseResponse
+     */
+    @RequestMapping(value = "/notice/put",method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public BaseResponse putNotice(@RequestBody @Validated Notice notice, BindingResult result){
+        String checkRes= ValidatorUtil.checkResult(result);
+        if (StrUtil.isNotBlank(checkRes)){
+            return new BaseResponse(StatusCode.Fail.getCode(),checkRes);
+        }
+        BaseResponse response=new BaseResponse(StatusCode.Success);
+        try {
+            log.info("--平台发送通知给到各位商户：{}",notice);
+            redisListService.pushNotice(notice);
+        }catch (Exception e){
+            response=new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
+        }
+        return response;
     }
 }

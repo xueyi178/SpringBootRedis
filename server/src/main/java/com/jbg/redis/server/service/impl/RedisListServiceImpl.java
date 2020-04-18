@@ -2,7 +2,9 @@ package com.jbg.redis.server.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.google.common.collect.Lists;
+import com.jbg.redis.model.entity.Notice;
 import com.jbg.redis.model.entity.Product;
+import com.jbg.redis.model.mapper.NoticeMapper;
 import com.jbg.redis.model.mapper.ProductMapper;
 import com.jbg.redis.server.constant.Constant;
 import lombok.extern.slf4j.Slf4j;
@@ -107,5 +109,33 @@ public class RedisListServiceImpl {
             return list;
         }
         return Collections.EMPTY_LIST;
+    }
+
+
+    @Autowired
+    private NoticeMapper noticeMapper;
+
+
+    /**
+     * 1. 描述: 平台发送通知给到各位商户
+     *    作者: xueyi
+     *    日期: 2020/4/12 16:05
+     *    参数: [notice]
+     *    返回: void
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void pushNotice(Notice notice) throws Exception{
+        if (notice!=null){
+            notice.setId(null);
+            noticeMapper.insertSelective(notice);
+            final Integer id=notice.getId();
+
+            if (id>0){
+                //TODO:塞入List列表中(队列)，准备被拉取异步通知至不同的商户的邮箱 - applicationEvent&Listener;Rabbitmq;jms
+                ListOperations<String,Notice> listOperations=redisTemplate.opsForList();
+                //Constant.RedisListNoticeKey: 表示为key
+                listOperations.leftPush("SpringBootRedis:List:Queue:Notice",notice);
+            }
+        }
     }
 }
