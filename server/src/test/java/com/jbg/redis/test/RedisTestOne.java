@@ -7,10 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -77,5 +74,40 @@ public class RedisTestOne {
 
         listOperations.remove(key, 0, 100);
         log.info("-----当前列表中的元素:{}", listOperations.range(key,0,10));
+    }
+
+    @Test
+    public void method3() {
+        log.info("----开始集合Set测试");
+        final String key1 = "SpringBootRedis:Set:10010";
+        final String key2 = "SpringBootRedis:Set:10011";
+        redisTemplate.delete(key1);
+        redisTemplate.delete(key2);
+
+        SetOperations<String, String> setOperations = redisTemplate.opsForSet();
+
+        setOperations.add(key1, new String[]{"a", "b", "c"});
+        setOperations.add(key2, new String[]{"b", "e", "f"});
+
+        log.info("---集合key1的元素：{}", setOperations.members(key1));
+        log.info("---集合key2的元素：{}", setOperations.members(key2));
+
+        log.info("---集合key1随机取1个元素：{}", setOperations.randomMember(key1));
+        log.info("---集合key1随机取n个元素：{}", setOperations.randomMembers(key1, 2L));
+
+        log.info("---集合key1元素个数：{}", setOperations.size(key1));
+        log.info("---集合key2元素个数：{}", setOperations.size(key2));
+
+        log.info("---元素a是否为集合key1的元素：{}", setOperations.isMember(key1, "a"));
+        log.info("---元素f是否为集合key1的元素：{}", setOperations.isMember(key1, "f"));
+
+        log.info("---集合key1和集合key2的差集元素：{}", setOperations.difference(key1, key2));
+        log.info("---集合key1和集合key2的交集元素：{}", setOperations.intersect(key1, key2));
+        log.info("---集合key1和集合key2的并集元素：{}", setOperations.union(key1, key2));
+
+        log.info("---从集合key1中弹出一个随机的元素：{}", setOperations.pop(key1));
+        log.info("---集合key1的元素：{}", setOperations.members(key1));
+        log.info("---将c从集合key1的元素列表中移除：{}", setOperations.remove(key1, "c"));
+
     }
 }
