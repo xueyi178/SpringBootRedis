@@ -2,6 +2,8 @@ package com.jbg.redis.model.mapper;
 
 import com.jbg.redis.model.entity.Problem;
 
+import java.util.Set;
+
 public interface ProblemMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface ProblemMapper {
     int updateByPrimaryKeySelective(Problem record);
 
     int updateByPrimaryKey(Problem record);
+
+    Set<Problem> getAll();
 }

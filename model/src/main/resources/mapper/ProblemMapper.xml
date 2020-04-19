@@ -103,4 +103,12 @@
       order_by = #{orderBy,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAll" resultType="com.jbg.redis.model.entity.Problem">
+    select
+    <include refid="Base_Column_List" />
+    from problem
+    where is_active = 1
+    order by order_by asc
+  </select>
 </mapper>

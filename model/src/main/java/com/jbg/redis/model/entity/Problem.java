@@ -1,5 +1,10 @@
 package com.jbg.redis.model.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode
 public class Problem {
     private Integer id;
 

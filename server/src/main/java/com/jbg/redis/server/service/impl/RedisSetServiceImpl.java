@@ -99,4 +99,7 @@ public class RedisSetServiceImpl {
         return (Set<String>) setOperations.randomMembers("SpringBoot:Redis:Set:User:Email", setOperations.size("SpringBoot:Redis:Set:User:Email"));
 
     }
+
+
+
 }
