@@ -26,7 +26,7 @@
     values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{fare,jdbcType=DECIMAL}, 
       #{isActive,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.jbg.redis.model.entity.PhoneFare">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.jbg.redis.model.entity.PhoneFare">
     insert into phone_fare
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -79,4 +79,10 @@
       is_active = #{isActive,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+ <!-- 基于数据进行缓存补偿机制-->
+  <select id="listPhoneFare" resultType="com.jbg.redis.model.entity.PhoneFare">
+    SELECT phone, SUM(fare) AS fare FROM phone_fare  GROUP BY phone ORDER BY fare DESC
+  </select>
+
 </mapper>

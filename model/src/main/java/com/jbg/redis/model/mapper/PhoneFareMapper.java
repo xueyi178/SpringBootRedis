@@ -2,6 +2,8 @@ package com.jbg.redis.model.mapper;
 
 import com.jbg.redis.model.entity.PhoneFare;
 
+import java.util.List;
+
 public interface PhoneFareMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface PhoneFareMapper {
     int updateByPrimaryKeySelective(PhoneFare record);
 
     int updateByPrimaryKey(PhoneFare record);
+
+    List<PhoneFare> listPhoneFare();
 }
