@@ -31,7 +31,7 @@
       #{total,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{isActive,jdbcType=TINYINT}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jbg.redis.model.entity.RedRecord">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.jbg.redis.model.entity.RedRecord">
     insert into red_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
