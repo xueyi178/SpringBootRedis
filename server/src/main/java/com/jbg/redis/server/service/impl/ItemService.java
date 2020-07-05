@@ -57,7 +57,7 @@ public class ItemService {
 
         entity.setCode(UUID.randomUUID().toString());
 
-        log.info("-----@CachePut走数据库查询:[{}]",entity);
+        log.info("学院 @CachePut走数据库查询:[{}]",entity);
         return entity;
     }
 
